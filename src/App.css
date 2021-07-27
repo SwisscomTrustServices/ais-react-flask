@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.masthead {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.interactionContainer {
+  margin-left: 16px;
+  background-color: white;
+  padding: 16px;
+  border-radius: 16px;
+}
