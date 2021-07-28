@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## JS React AIS Client Video Demo
 
-[![Watcht the video](https://imgur.com/BSmIo45)](https://youtu.be/8M9KF7xGOs4)
+[![Watcht the video](https://i.imgur.com/BSmIo45.png)](https://youtu.be/8M9KF7xGOs4)
 
 or see it on SharePoint:
 
