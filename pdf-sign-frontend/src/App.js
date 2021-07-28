@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 import { Ellipsis } from "react-css-spinners";
@@ -24,10 +24,6 @@ function App() {
   }
 
   const handleSubmission = () => {
-    // calculate the has and an empty singature container
-    // then pdf is stored on  relying party
-    // redirect
-
     setLocalStorage();
 
     const formData = new FormData();
@@ -42,9 +38,8 @@ function App() {
       .then((result) => {
         console.log("Success:", result);
 
-        window.location.replace(
-          "http://localhost:8080/auth/realms/broker/protocol/openid-connect/auth?client_id=account&redirect_uri=http%3A%2F%2Flocalhost%3A3000&response_type=code&scope=openid&acr_values=qoa1&claims=%7B%22urn%3Acom%3Aswisscom%3AcredentialID%22%3A%7B%22value%22%3A%22qes_eidas%22%7D%2C%22urn%3Acom%3Aswisscom%3Adocname%22%3A%7B%22value%22%3A%22CoolContract.pdf%22%7D%2C%22urn%3Acom%3Aswisscom%3Ahash%22%3A%7B%22value%22%3A%2268627B2EABC506AA71F4851D0A36F7BD%22%7D%7D%0A"
-        );
+        setLoading(true);
+        signPdf();
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -56,17 +51,6 @@ function App() {
 
     localStorage.setItem("pdfTitle", JSON.stringify({ pdfTitle }));
   };
-
-  React.useEffect(() => {
-    const queryString = window.location.href;
-    const urlParams = new URLSearchParams(queryString);
-    const pdfTitle = localStorage.getItem("pdfTitle");
-
-    if (urlParams.has("code") && pdfTitle) {
-      setLoading(true);
-      signPdf();
-    }
-  }, []);
 
   const signPdf = () => {
     const pdfTitle = localStorage.getItem("pdfTitle");
@@ -88,29 +72,38 @@ function App() {
       });
   };
 
-  if (loading) return <Ellipsis />;
+  if (loading)
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+        <p style={{ color: "#fff", fontSize: 24 }}>Signing is pending</p>
+        <Ellipsis />
+      </div>
+    );
 
   if (signedSuccessfully)
     return (
-      <div>
+      <div className="interactionContainer">
         <p>Signed successfully</p>
-        <p>Download your pdf here</p>
         <button
+          className="button"
           onClick={() => {
             const pdfTitleObj = localStorage.getItem("pdfTitle");
             const pdfTitle = JSON.parse(pdfTitleObj).pdfTitle;
             window.open("http://127.0.0.1:8001/uploads/" + pdfTitle, "_blank").focus();
           }}
         >
-          Download
+          Download Signed PDF
         </button>
         <button
+          className="button"
           onClick={() => {
             setSignedSuccessfully(false);
             localStorage.removeItem("pdfTitle");
+            setSelectedFile(null);
+            setIsFilePicked(false);
           }}
         >
-          Reset flow
+          Sign a new PDF
         </button>
       </div>
     );
@@ -123,11 +116,8 @@ function App() {
         </Document>
       )}
       <div className="interactionContainer">
-        {/* make a custom button choose a pdf */}
         <input type="file" name="file" onChange={changeHandler} />
-        {/* <input type='file' id='file' ref={inputFile} style={{display: 'none'}}/> */}
 
-        {/* <button onClick={changeHandler}>Choose a PDF file</button> */}
         {isFilePicked ? (
           <div>
             <p>Filename: {selectedFile.name}</p>
@@ -154,7 +144,7 @@ export default App;
 const PageNumbers = ({ pageNumber, setPageNumber, numPages }) => {
   return (
     <div style={{ marginTop: "16px" }}>
-      <div>
+      <div style={{ marginBottom: "16px" }}>
         Page {pageNumber} of {numPages}
       </div>
       {pageNumber > 1 && <button onClick={() => setPageNumber((prevState) => prevState - 1)}>previous page</button>}

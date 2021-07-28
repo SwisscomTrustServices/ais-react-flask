@@ -51,3 +51,11 @@
   padding: 16px;
   border-radius: 16px;
 }
+
+.button {
+  margin: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-color: darkgray;
+}

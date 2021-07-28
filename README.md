@@ -1,78 +1,90 @@
-# Getting Started with Create React App
+# React and Flask (Python and iText7) based AIS Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A client for using the [Swisscom All-in Signing Service (AIS)](https://www.swisscom.ch/en/business/enterprise/offer/security/all-in-signing-service.html)
+to sign and/or timestamp PDF documents, which relies on the [iText](https://itextpdf.com/en) library for PDF processing.
 
-## JS React AIS Client Video Demo
+## Demo Video
 
 [![Watcht the video](https://i.imgur.com/BSmIo45.png)](https://youtu.be/8M9KF7xGOs4)
 
 or see it on SharePoint:
 
-* https://swisscom-my.sharepoint.com/:v:/r/personal/paul_muntean_swisscom_com/Documents/Aufnahmen/Keycloak%20POC%20Implementation%20Session-20210728_085100-Besprechungsaufzeichnung.mp4?csf=1&web=1&e=JhHzGO
+- https://swisscom-my.sharepoint.com/:v:/r/personal/paul_muntean_swisscom_com/Documents/Aufnahmen/Keycloak%20POC%20Implementation%20Session-20210728_085100-Besprechungsaufzeichnung.mp4?csf=1&web=1&e=JhHzGO
 
-## Available Scripts
+## Getting started
 
-In the project directory, you can run:
+To start using the Swisscom AIS service and this client library, do the following:
 
-### `yarn start`
+1. Acquire an [iText license](https://itextpdf.com/en/how-buy)
+2. [Get authentication details to use with the AIS client](docs/get-authentication-details.md).
+3. [Build or download the AIS client binary package](docs/build-or-download.md)
+4. [Configure the AIS client for your use case](docs/configure-the-AIS-client.md)
+5. Use the AIS client, either [programmatically](docs/use-the-AIS-client-programmatically.md) or from the [command line](docs/use-the-AIS-client-via-CLI.md)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Other topics of interest might be:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [On PAdES Long Term Validation support](docs/pades-long-term-validation.md)
 
-### `yarn test`
+## Quick examples
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The rest of this page provides some quick examples for using the AIS client. Please see the links
+above for detailed instructions on how to get authentication data, download and configure
+the AIS client. The following snippets assume that you are already set up.
 
-### `yarn build`
+### Command line usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Get a help listing by calling the client without any parameters:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```shell
+./bin/ais-client.sh
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+or
 
-### `yarn eject`
+```shell
+./bin/ais-client.sh -help
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Get a default configuration file set in the current folder using the _-init_ parameter:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```shell
+./bin/ais-client.sh -init
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Apply an On Demand signature with Step Up on a local PDF file:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```shell
+./bin/ais-client.sh -type ondemand-stepup -input local-sample-doc.pdf -output test-sign.pdf
+```
 
-## Learn More
+You can also add the following parameters for extra help:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- _-v_: verbose log output (sets most of the client loggers to debug)
+- _-vv_: even more verbose log output (sets all the client loggers to debug, plus the Apache HTTP Client to debug, showing input and output HTTP traffic)
+- _-config_: select a custom properties file for configuration (by default it looks for the one named _sign-pdf.properties_)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+More than one file can be signed/timestamped at once:
 
-### Code Splitting
+```shell
+./bin/ais-client.sh -type ondemand-stepup -input doc1.pdf -input doc2.pdf -input doc3.pdf
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+You don't have to specify the output file:
 
-### Analyzing the Bundle Size
+```shell
+./bin/ais-client.sh -type ondemand-stepup -input doc1.pdf
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The output file name is composed of the input file name plus a configurable _suffix_ (by default it is "-signed-#time", where _#time_
+is replaced at runtime with the current date and time). You can customize this suffix:
 
-### Making a Progressive Web App
+```shell
+./bin/ais-client.sh -type ondemand-stepup -input doc1.pdf -suffix -output-#time
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## References
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [Swisscom All-In Signing Service homepage](https://www.swisscom.ch/en/business/enterprise/offer/security/all-in-signing-service.html)
+- [Swisscom All-In Signing Service reference documentation (PDF)](http://documents.swisscom.com/product/1000255-Digital_Signing_Service/Documents/Reference_Guide/Reference_Guide-All-in-Signing-Service-en.pdf)
+- [Swisscom Trust Services documentation](https://trustservices.swisscom.com/en/downloads/)
+- [iText library](https://itextpdf.com/en)
