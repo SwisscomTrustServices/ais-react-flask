@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## JS React AIS Client Video Demo
+
+[![Watcht the video](https://imgur.com/BSmIo45)](https://youtu.be/8M9KF7xGOs4)
+
+or see it on SharePoint:
+
+* https://swisscom-my.sharepoint.com/:v:/r/personal/paul_muntean_swisscom_com/Documents/Aufnahmen/Keycloak%20POC%20Implementation%20Session-20210728_085100-Besprechungsaufzeichnung.mp4?csf=1&web=1&e=JhHzGO
+
 ## Available Scripts
 
 In the project directory, you can run:
