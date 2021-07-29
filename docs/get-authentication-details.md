@@ -55,21 +55,3 @@ signature.claimedIdentityName=ais-90days-trial
 signature.claimedIdentityKey=keyEntity
 signature.distinguishedName=cn=TEST User, givenname=Max, surname=Maximus, c=US, serialnumber=abcdefabcdefabcdefabcdefabcdef
 ```
-
-Programmatic way:
-```java
-RestClientConfiguration restConfig = RestClientConfiguration.builder()
-    .withServerCertificateFile("/home/user/ais-server.crt")
-    .withClientKeyFile("/home/user/ais-client.key")
-    .withClientKeyPassword("secret")
-    .withClientCertificateFile("/home/user/ais-client.crt")
-    .build();
-
-// ...
-UserData userData = UserData.builder()
-    .withClaimedIdentityName("ais-90days-trial")
-    .withClaimedIdentityKey("keyEntity")
-    .withDistinguishedName("cn=TEST User, givenname=Max, surname=Maximus, c=US, serialnumber=abcdefabcdefabcdefabcdefabcdef")
-    .build();
-```
-
