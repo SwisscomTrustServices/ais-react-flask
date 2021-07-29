@@ -17,9 +17,8 @@ To start using the Swisscom AIS service and this client library, do the followin
 
 1. Acquire an [iText license](https://itextpdf.com/en/how-buy)
 2. [Get authentication details to use with the AIS client](docs/get-authentication-details.md).
-3. [Build or download the AIS client binary package](docs/build-or-download.md)
-4. [Configure the AIS client for your use case](docs/configure-the-AIS-client.md)
-5. Use the AIS client, either [programmatically](docs/use-the-AIS-client-programmatically.md) or from the [command line](docs/use-the-AIS-client-via-CLI.md)
+3. [Configure the AIS client for your use case](docs/configure-the-AIS-client.md)
+4. Use the AIS client, either [programmatically](docs/use-the-AIS-client-programmatically.md) or from the [command line](docs/use-the-AIS-client-via-CLI.md)
 
 Other topics of interest might be:
 
