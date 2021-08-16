@@ -33,6 +33,8 @@ openssl x509 -req -days 90 -in my-ais.csr -signkey my-ais.key -out my-ais.crt
 ```
 The resulting certificate needs to be sent to the Swisscom AIS team for creating an account linked to this certificate. 
 This might vary from case to case, so please get in touch with Swisscom and discuss the final steps for authorizing the certificate.
+  
+  Contact : MSC.Support@swisscom.com Form to send : http://documents.swisscom.com/product/filestore/lib/86aba1a4-ab7a-494f-88ac-e7b7107ea623/orderpermanenttestaccount-en.pdf
 
 ## Get the AIS Claimed Identities and the relevant CA certificates
 Besides the TLS client certificate, you also need the Claimed Identity strings to use with the AIS Client and the trusted 
