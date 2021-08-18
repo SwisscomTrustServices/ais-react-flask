@@ -42,9 +42,33 @@ def signpdf():
         request_data = request.get_json()
         pdfTitle = request_data['pdfTitle']
 
-        shellCommand = './target/release/itext7-ais-1.2.0/bin/ais-client.sh -config target/release/itext7-ais-1.2.0/bin/sign-pdf.properties -type ondemand-stepup -input pdf/'+pdfTitle+'.pdf -vvv'
+        shellCommand = './target/release/itext7-ais-1.2.0/bin/ais-client.sh -config target/release/itext7-ais-1.2.0/bin/sign-pdf.properties -type ondemand-stepup -input pdf/'+pdfTitle+'.pdf -vv'
         print("shell command: ",shellCommand)
-        subprocess.call(shlex.split(shellCommand))
+        code = subprocess.call(shlex.split(shellCommand))
+
+
+        # error handling from java process
+        if code == 1:
+            return make_response(jsonify({'error': 'AIS_ERROR',}), 500)
+
+        if code == 3:
+            return make_response(jsonify({'error': 'USER_CANCEL'}), 500)
+
+        if code == 4:
+            return make_response(jsonify({'error': 'USER_AUTHENTICATION_FAILED'}), 500)
+
+        if code == 5:
+            return make_response(jsonify({'error': 'USER_TIMEOUT'}), 500)
+
+        if code == 6:
+            return make_response(jsonify({'error': 'SERIAL_NUMBER_MISMATCH'}), 500)
+
+        if code == 7:
+            return make_response(jsonify({'error': 'USER_AUTHENTICATION_FAILED'}), 500)
+
+        if code == 8:
+            return make_response(jsonify({'error': 'INSUFFICIENT_DATA_WITH_ABSENT_MSISDN'}), 500)
+
 
         return make_response(jsonify({'code': 'SUCCESS'}), 200)
     
