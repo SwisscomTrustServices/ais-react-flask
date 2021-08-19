@@ -1,7 +1,6 @@
 # React and Flask (Python and iText7) based AIS Client
 
-This a client based on JavaScript, React for using the [Swisscom All-in Signing Service (AIS)](https://www.swisscom.ch/en/business/enterprise/offer/security/all-in-signing-service.html)
-to sign and/or timestamp PDF documents. The client has the same functionalities for PDF files processing as our [iText](https://itextpdf.com/en) client.
+This client is based on JavaScript, React and uses [Swisscom All-in Signing Service (AIS)](https://www.swisscom.ch/en/business/enterprise/offer/security/all-in-signing-service.html) to sign and/or timestamp PDF documents. The client has the same functionalities for PDF files processing as our [iText7](https://github.com/SwisscomTrustServices/itext7-ais) client.
 
 ## Demo Video
 
