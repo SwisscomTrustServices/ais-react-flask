@@ -8,13 +8,9 @@ The authentication between an AIS client and the AIS service relies on TLS clien
 that is enrolled on the Swisscom AIS side. For these steps, a local installation of [OpenSSL](https://www.openssl.org/) is needed
 (for Windows, the best option is to use the one that comes with GIT for Windows (see _<git>/usr/bin/openssl.exe_)).
 
-Generate first a private key:
+Generate a private key and a Certificate Signing Request (CSR):
 ```shell
-openssl genrsa -des3 -out my-ais.key 2048
-```
-Then generate a Certificate Signing Request (CSR):
-```shell
-openssl req -new -key my-ais.key -out my-ais.csr
+openssl req -new -newkey rsa:3072 -nodes -keyout my-ais.key -out my-ais.csr
 ```
 You will be asked for the following:
 ```text
